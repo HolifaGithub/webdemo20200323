@@ -1,10 +1,16 @@
 .template-item{
-    width: 270px;
+    width: 380px;
     height: 350px;
     background-color: #fff;
     border-radius: 20px;
     margin-top: 20px;
     margin-left: 20px;
+    text-decoration: none;
+    transition: all 0.75;
+}
+.template-item:hover{
+    transform: scale(0.96) translate(10px);
+    box-shadow: 0 0 20px red;
 }
 .template-item .template-image{
     width: 100%;
@@ -18,12 +24,13 @@
 }
 .template-item .templatte-title{
     font-size: 16px;
-    counter-reset: #777;
+    color: #555555;
     font-weight: bold;
     margin-bottom: 10px;
     margin-top: 10px;
     text-align: start;
-    margin-left: 20px;
+    width: 100%;
+    /* margin-left: 20px; */
 }
 .template-item .template-btn{
     display: flex;
@@ -33,6 +40,9 @@
     cursor: pointer;
     width: 100%;
 }
+.template-item .template-btn a{
+    text-decoration: none;
+}
 .template-item .editor,.template-item .view{
     width: 100px;
     height: 40px;
@@ -41,6 +51,7 @@
     line-height: 40px;
     text-align: center;
     margin-right: 10px;
+    text-decoration: none;
 }
 .template-item .editor{
     background-color: red;
@@ -51,4 +62,19 @@
 }
 .template-item .editor:hover,.template-item .view:hover{
     box-shadow: 0 0 10px blue;
+}
+.template-item .tip{
+    width: 180px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    opacity: 0.8;
+    background-color: #777;
+    border-radius: 10px;
+    color: #fff;
+    position: fixed;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    top: 200px;
 }

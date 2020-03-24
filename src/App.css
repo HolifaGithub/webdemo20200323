@@ -58,7 +58,7 @@
 .app .header .header-user .header-user-logo{
     width: 50px;
     border-radius: 50%;
-    margin-right: 50px;
+    margin-right: 20px;
 }
  .header-user-btn{
     width:80px;
@@ -102,31 +102,45 @@
     height: 400px;
     background-color: #fff;
     border-radius: 30px;
-    box-shadow: 0 0 150px #FF0000;
+    box-shadow: 0 0 20px #FF0000;
+    font-family: 'KAITI';
 }
-.login .login-title{
+.register{
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 200px;
+    margin: 0 auto;
+    width: 600px;
+    height: 490px;
+    background-color: #fff;
+    border-radius: 30px;
+    box-shadow: 0 0 20px #FF0000;
+    font-family: 'KAITI';
+}
+.login .login-title,.register .register-title{
     font-size: 27px;
     font-weight: bold;
     text-align: center;
     margin-top: 10px;
 }
-.login .login-item{
+.login .login-item,.register .register-item{
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 22px;
-    margin-top: 20px;
+    margin-top: 40px;
 }
-.login .login-input{
+.login .login-input,.register .register-input{
     width: 300px;
     height: 40px;
     padding-left: 10px;
 }
-.login .login-input:focus{
+.login .login-input:focus,.register .register-input:focus{
     outline: 1px solid #FF0000;
     box-shadow: 0 0 10px #FF0000;
 }
-.login .login-btn{
+.login .login-btn,.register .register-btn{
     width: 390px;
     height: 50px;
     border-radius: 10px;
@@ -135,12 +149,12 @@
     line-height: 50px;
     background-color: red;
     margin: 0 auto;
-    margin-top: 80px;
+    margin-top: 30px;
     font-weight: bold;
     font-size: 18px;
     cursor: pointer;
 }
-.login .login-btn-cancel{
+.login .login-btn-cancel,.register .register-btn-cancel{
     width: 390px;
     height: 50px;
     border-radius: 10px;
@@ -153,4 +167,39 @@
     font-size: 18px;
     margin-top: 20px;
     cursor: pointer;
+}
+.register .confirm{
+    position: relative;
+    left: -32px;
+}
+.my-template{
+    width: 100%;
+    height: 733px;
+}
+.my-template .none-tip{
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    top: 300px;
+    text-align: center;
+    columns: #999;
+    font-family: 'KaiTi';
+}
+.my-template .none-tip .none-tip-btn{
+    width: 120px;
+    height: 50px;
+    border-radius: 10px;
+    text-align: center;
+    line-height: 50px;
+    background-color: red;
+    color: #fff;
+    margin-left: 700px;
+    margin-top: 20px;
+    cursor: pointer;
+}
+.register-tip{
+    color: red;
+    text-align: center;
+    margin-top: 10px;
 }
