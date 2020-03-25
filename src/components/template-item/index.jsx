@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import src from '../../image/template1.png'
 import './index.css'
 class TemplateItem extends Component {
     state = {
@@ -25,10 +26,10 @@ class TemplateItem extends Component {
     }
     render() {
         const { data,isLogin } = this.props
-        const {webname, cfgTitle,cfgDescribe } = data
+        const {webname, cfgTitle,cfgDescribe,id } = data
         return (
             <div className="template-item">
-                <img src={pic} alt="" className='template-image' />
+                <img src={src} alt="" className='template-image' />
                 <div className='template-main'>
                     <div className='templatte-title'>{webname}</div>
                     <div className='template-btn'>

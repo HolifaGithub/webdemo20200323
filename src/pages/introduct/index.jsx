@@ -22,12 +22,20 @@ class Introduct extends Component {
         isView: false
     }
     componentDidMount(){
-       const type=this.props.location.query.type
-       if(type==='editor'){
-           this.setState({isView:false})
-       }else if(type==='view'){
-        this.setState({isView:true})
-       }
+        if(this.props.location.query.type){
+            const type=this.props.location.query.type
+            if(type==='editor'){
+                this.setState({isView:false})
+            }else if(type==='view'){
+             this.setState({isView:true})
+            }
+        }
+        if(this.props.location.query.cfgTitle){
+            this.setState({cfgTitle:this.props.location.query.cfgTitle})
+        }
+        if(this.props.location.query.cfgDescribe){
+            this.setState({cfgTitle:this.props.location.query.cfgDescribe})
+        }
     }
     onNickNameChange(event) {
         this.setState({ cfgTitle: event.target.value })
@@ -50,10 +58,10 @@ class Introduct extends Component {
         let token = this.props.state.token
         let {webname,cfgDescribe,cfgTitle}=this.state
         let data ={webname,cfgDescribe,cfgTitle}
-        console.log(data);
-        axios.defaults.withCredentials=true
-        axios.post(`http://121.36.102.75:8080/${token}webcfg/commit/${username}`, data).then(res => {
-            console.log(res);
+        // console.log(data);
+        // axios.defaults.withCredentials=true
+        axios.post(`http://121.36.102.75:8080/${token}/webcfg/commit/${username}`, data).then(res => {
+            // console.log(res);
             const data = res.data
             if(data.code===3001){
                 alert('提交成功！')

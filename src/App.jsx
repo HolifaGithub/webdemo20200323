@@ -44,8 +44,7 @@ class App extends Component {
   }
   templateListDatas = [
     {
-      pic: template1,
-      title: '个人简介模板'
+      webname: '个人简介模板'
     }
   ]
   onLoginClick() {
@@ -92,6 +91,15 @@ class App extends Component {
   }
   onMyTemplatePageClick() {
     this.setState({ navBarIndex: 1 })
+    const token =this.props.state.token
+    const username=this.props.state.username
+    axios.get(`http://121.36.102.75:8080/${token}/webcfg/getall/${username}`).then(res => {
+      const data = res.data
+      if(data.code===3002){
+        const cfgList = data.cfgList
+        this.setState({mytemplateListDatas:cfgList})
+      }
+    })
   }
   backMainPage() {
     this.setState({ navBarIndex: 0 })
@@ -169,7 +177,7 @@ class App extends Component {
         </main>) : null}
         {this.state.navBarIndex === 1 ? (<main className='my-template'>
           {this.state.mytemplateListDatas && this.state.mytemplateListDatas.length > 0 ? (
-            <div>
+            <div className='my-template-container'>
               {this.state.mytemplateListDatas.map((data, index) => {
                 return (
                   <TemplateItem key={data.id} data={data} isLogin={this.props.state.isLogin}></TemplateItem>
