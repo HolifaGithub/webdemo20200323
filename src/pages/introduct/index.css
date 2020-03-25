@@ -68,8 +68,8 @@
   }
   .submit-container{
     position: fixed;
-    width: 200px;
-    height: 122px;
+    width: 250px;
+    height: 222px;
     background-color: #888;
     opacity: 0.6;
     bottom: 20px;
@@ -101,6 +101,14 @@
 }
 .submit .submit-btn{
   background-color: red;
+}
+.select-color{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-left: 33px;
+  color: red;
+  margin-bottom: 10px;
 }
 .template-name{
   width: 100%;
