@@ -34,7 +34,7 @@ class Introduct extends Component {
             this.setState({cfgTitle:this.props.location.query.cfgTitle})
         }
         if(this.props.location.query.cfgDescribe){
-            this.setState({cfgTitle:this.props.location.query.cfgDescribe})
+            this.setState({cfgDescribe:this.props.location.query.cfgDescribe})
         }
     }
     onNickNameChange(event) {
@@ -77,6 +77,7 @@ class Introduct extends Component {
         })
     }
     render() {    
+        // console.log(this.state.cfgDescribe,this.state.cfgTitle);
         return (
             <div>
                 <div className="introduct">
