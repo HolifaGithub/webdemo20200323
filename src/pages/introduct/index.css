@@ -6,6 +6,7 @@
   .left-image{
     width: 50%;
     height: 838px;
+    transition: all 0.75;
   }
   .right{
     width:50% ;
@@ -32,17 +33,22 @@
   }
   .right-bottom {
     margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
   }
-  .btn{
+  .right-bottom .btn{
     width: 180px;
     height: 80px;
-    line-height: 80px;
+    line-height: 70px;
     margin: 0 auto;
     margin-top: 30px;
     border: 1px solid #333;
     transition: all 0.7s;
     font-weight: bold;
     box-shadow: 0 0 20px #aaa;
+
   }
   .btn:hover{
     background-color: #DD4911;
@@ -122,4 +128,25 @@
 .template-name>input{
   width: 100px;
   border-radius: 10px;
+}
+.introduct .select-bg{
+ width: 180px;
+ height: 270px;
+ margin: 30px;
+ border-radius: 10px;
+ box-shadow: 0 0 10px #666;
+ transition: all 1s;
+}
+.introduct .select-bg:hover{
+  transform: scale(1.1);
+}
+.introduct .select-bg-container{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  flex-wrap: wrap;
+}
+.introduct .selected{
+  border:3px solid red;
 }

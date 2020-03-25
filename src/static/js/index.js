@@ -175,7 +175,7 @@ class Slider {
     var nextId = dot.dataset.id;
     var currentId = this.activeImg[0].dataset.id;
 
-    if (currentId == nextId) return;
+    if (currentId === nextId) return;
 
     this.startTransition(nextId);
   };

@@ -2,20 +2,20 @@ import React, { Component } from 'react'
 import './index.css'
 import Footer from '../../components/footer/index'
 import { connect } from 'react-redux'
-import '../static/css/slide/normalize.css'
-import '../static/css/slide/demo.css'
-import '../static/css/slide/style.css'
-import '../static/css/main/bootstrap.css'
-import '../static/css/main/style.css'
-import '../static/css/main/font-awesome.min.css'
-import logo from '../static/images/logo.png'
-import topBackGroundImage from '../static/images/banner-top.png'
-import banner1 from "../static/images/1.jpg"
-import banner2 from "../static/images/2.jpg"
-import banner3 from "../static/images/3.jpg"
-import banner4 from "../static/images/4.jpg"
-import banner5 from "../static/images/5.jpg"
-import Slider from '../static/js/index'
+import '../../static/css/slide/normalize.css'
+import '../../static/css/slide/demo.css'
+import '../../static/css/slide/style.css'
+import '../../static/css/main/bootstrap.css'
+import '../../static/css/main/style.css'
+import '../../static/css/main/font-awesome.min.css'
+import logo from '../../static/images/logo.png'
+import topBackGroundImage from '../../static/images/banner-top.png'
+import banner1 from "../../static/images/1.jpg"
+import banner2 from "../../static/images/2.jpg"
+import banner3 from "../../static/images/3.jpg"
+import banner4 from "../../static/images/4.jpg"
+import banner5 from "../../static/images/5.jpg"
+import Slider from '../../static/js/index'
 // import axios from 'axios'
 
 const mapStateToProps = (state) => {
