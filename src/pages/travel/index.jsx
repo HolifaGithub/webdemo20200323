@@ -9,13 +9,14 @@ import '../../static/css/main/bootstrap.css'
 import '../../static/css/main/style.css'
 import '../../static/css/main/font-awesome.min.css'
 import logo from '../../static/images/logo.png'
-import topBackGroundImage from '../../static/images/banner-top.png'
+import topBackGroundImage from '../../static/images/1.jpg'
 import banner1 from "../../static/images/1.jpg"
 import banner2 from "../../static/images/2.jpg"
 import banner3 from "../../static/images/3.jpg"
 import banner4 from "../../static/images/4.jpg"
 import banner5 from "../../static/images/5.jpg"
 import Slider from '../../static/js/index'
+import '../../ihover.min.css'
 // import axios from 'axios'
 
 const mapStateToProps = (state) => {
@@ -30,7 +31,17 @@ const mapDispatchToProps = (dispatch) => {
 
 class Travel extends Component {
     state = {
-        bannerIndex: 1
+        webname: '',
+        moduleID: 2,
+        cfgContent1: '旅游日记',
+        cfgContent2: '地名：新疆',
+        cfgContent3: 'TO --- 旅游爱好者',
+        cfgContent4: '世界那么大，我想去看看。',
+        cfgBgColor: '',
+        cfgImageSrc: '',
+        cfgFontColor: '',
+        cfgMain: [],
+        isView: false
     }
     componentDidMount() {
         var sliderEl = document.getElementById('slider');
@@ -54,22 +65,35 @@ class Travel extends Component {
             this.removeEventListener('touchstart', stopAutoSlide);
             this.removeEventListener('mousemove', stopAutoSlide);
         }
-
         sliderEl.addEventListener('mousemove', stopAutoSlide);
-        sliderEl.addEventListener('touchstart', stopAutoSlide);
-
+        sliderEl.addEventListener('touchstart', stopAutoSlide)
         timer = setTimeout(autoSlide, 2000);
+    }
+    onCfgContent1Change(event){
+        this.setState({cfgContent1:event.target.value})
+    }
+    onCfgContent2Change(event){
+        this.setState({cfgContent2:event.target.value})
+    }
+    onCfgContent3Change(event){
+        this.setState({cfgContent3:event.target.value})
+    }
+    onCfgContent4Change(event){
+        this.setState({cfgContent4:event.target.value})
     }
     render() {
         return (
-            <div>
-                <header>
-                    <nav className="navbar">
-                        <div className="container">
-                            <h1 className="wthree-logo">
-                                <a href="main.html" id="logoLink"><img src={logo} alt='' /></a>
-                            </h1>
-                            <ul id="menu" >
+            <div className={`${this.state.isView ? '' : 'on-editor'}`}>
+                <div class="ih-item square effect1 top_to_bottom"  style={{width:'100%',height:'670px'}}><a href="javascript:void(0);">
+                    <div class="img" style={{width:'100%'}}>
+                        <div>
+                            <header>
+                                <nav className="navbar">
+                                    <div className="container">
+                                        <h1 className="wthree-logo">
+                                            <a href="main.html" id="logoLink"><img src={logo} alt='' /></a>
+                                        </h1>
+                                        {/* <ul id="menu" >
                                 <li>
                                     <input id="check02" type="checkbox" name="menu" />
                                     <label htmlFor="check02"><span className="fa fa-bars" aria-hidden="true"></span></label>
@@ -83,34 +107,46 @@ class Travel extends Component {
                                         <li><a href="#contact">联系我</a></li>
                                     </ul>
                                 </li>
-                            </ul>
+                            </ul> */}
 
-                        </div>
-                    </nav>
-                </header>
-                <div id="home" className="banner-w3pvt d-flex" style={{ backgroundImage: `url(${topBackGroundImage})` }}>
-                    <div className="container">
-                        <div className="row">
-                            <div className="col-lg-7 bnr-txt-w3pvt">
-                                <div className="bnr-w3pvt-txt mt-sm-5">
-                                    <h6>旅游日记</h6>
-                                    <h2> 地名：<span>新疆</span></h2><br />
-                                    <h4>TO --- 旅游爱好者</h4>
-                                    <p className="mt-4"> 世界那么大，我想去看看。</p>
-                                    <ul className="social_section_1info mt-4">
-                                        <li className="mb-2 wechat"><a href="#"><span className="fa fa-wechat"></span></a></li>
-                                        <li className="mb-2 github"><a href="#"><span className="fa fa-github"></span></a></li>
-                                        <li className="linkedin"><a href="#"><span className="fa fa-linkedin"></span></a></li>
-                                        <li className="qq"><a href="#"><span className="fa fa-qq"></span></a></li>
-                                    </ul>
-                                    <a href="#about" className="scroll bnr-btn mr-2">更多 </a>
-                                    <a href="#contact" className="scroll bnr-btn1">联系我 </a>
+                                    </div>
+                                </nav>
+                            </header>
+                            <div id="home" className="banner-w3pvt d-flex" style={{ backgroundImage: `url(${topBackGroundImage})` }}>
+                                <div className="container">
+                                    <div className="row">
+                                        <div className="col-lg-7 bnr-txt-w3pvt">
+                                            <div className="bnr-w3pvt-txt mt-sm-5">
+                                                <h6 className={`${this.state.isView ? '' : 'on-editor'}`}>{this.state.cfgContent1}</h6>
+                                                <h2 className={`${this.state.isView ? '' : 'on-editor'}`}><span>{this.state.cfgContent2}</span></h2><br />
+                                                <h4 className={`${this.state.isView ? '' : 'on-editor'}`}>{this.state.cfgContent3}</h4>
+                                                <p className="mt-4" className={`${this.state.isView ? '' : 'on-editor'}`}>{this.state.cfgContent4}</p>
+                                                <ul className="social_section_1info mt-4">
+                                                    <li className="mb-2 wechat"><a href="javascript:void(0);"><span className="fa fa-wechat"></span></a></li>
+                                                    <li className="mb-2 github"><a href="javascript:void(0);"><span className="fa fa-github"></span></a></li>
+                                                    <li className="linkedin"><a href="javascript:void(0);"><span className="fa fa-linkedin"></span></a></li>
+                                                    <li className="qq"><a href="javascript:void(0);"><span className="fa fa-qq"></span></a></li>
+                                                </ul>
+                                                <a href="#about" className="scroll bnr-btn mr-2">更多 </a>
+                                                <a href="#contact" className="scroll bnr-btn1">联系我 </a>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <div class="info select-container">
+                        <h3>自定义属性：</h3>
+                        <p>Defined By Youself</p>
+                        <div>
+                            <input type="text" value={this.state.cfgContent1} onChange={(event)=>{this.onCfgContent1Change(event)}} className='cfg-content'/>
+                            <input type="text" value={this.state.cfgContent2} onChange={(event)=>{this.onCfgContent2Change(event)}} className='cfg-content'/>
+                            <input type="text" value={this.state.cfgContent3} onChange={(event)=>{this.onCfgContent3Change(event)}} className='cfg-content'/>
+                            <input type="text" value={this.state.cfgContent4} onChange={(event)=>{this.onCfgContent4Change(event)}} className='cfg-content'/>
+                        </div>
+                    </div></a>
                 </div>
-
                 <div className="slider" id="slider" >
                     <div className="slider__content" id="slider-content">
                         <div className="slider__images">

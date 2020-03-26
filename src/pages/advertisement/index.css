@@ -25,7 +25,7 @@
     font-family: "KAITI";
     transform: skew(-10deg);
     background-image:linear-gradient(to right,#1A1B1D,#1B3044,#1A8388);
-    animation: h1 3.5s linear 0s infinite    normal;
+    animation: h1 3.5s linear 0s infinite normal;
 }
 @keyframes h1{
     0%{

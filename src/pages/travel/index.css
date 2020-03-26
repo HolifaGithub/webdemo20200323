@@ -1,0 +1,22 @@
+@keyframes on-editor{
+    0%{
+        border: 1px solid red;
+        box-shadow: 0 0 10px red;
+    }
+    100%{
+        border: 1px solid #fff;
+        box-shadow: 0 0 10px #fff;
+    }
+  }
+.on-editor{
+    animation: on-editor 3.5s linear 0s infinite normal;
+    border-radius: 10px;
+}
+.select-container{
+    border:'1px solid red';
+    background-color: red;
+    width: 100%;
+}
+.cfg-content{
+    box-shadow: 0 0 10px #888888;
+}

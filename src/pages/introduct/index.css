@@ -24,6 +24,7 @@
     margin-top: 30px;
     font-weight: bold;
     font-family: Arial, Helvetica, sans-serif;
+    margin-bottom: 20px;
   }
   .right .introduct{
     margin-top: 30px;
@@ -51,23 +52,24 @@
 
   }
   .btn:hover{
-    background-color: #DD4911;
+    background-image: linear-gradient(to right,#eee,#aaa);
+    border: 1px solid #aaa;
+    box-shadow: 0 0 10px #aaa ;
     color: #fff;
-    border: none;
     transform: scale(0.9);
   }
   .describe-input{
     width: 400px;
     height: 100px;
     overflow: hidden;
-    border: 1px solid red;
     border-radius: 10px;
     outline: none;
     margin-top: 30px;
     box-shadow: 0 0 10 #888;
+    animation: on-editor 3.5s linear 0s infinite normal;
   }
   .nick-name-input{
-    border: 1px solid red;
+    animation: on-editor 3.5s linear 0s infinite normal;
     border-radius: 10px;
     outline: none;
     padding-left: 10px;
@@ -75,12 +77,13 @@
   .submit-container{
     position: fixed;
     width: 250px;
-    height: 222px;
+    height: 182px;
     background-color: #888;
     opacity: 0.6;
     bottom: 20px;
     right: 20px;
     border-radius: 20px;
+    box-shadow: 0  0 10px #888;
   }
   .submit-container .submit{
     display: flex;
@@ -126,8 +129,9 @@
   margin-top: 10px;
 }
 .template-name>input{
-  width: 100px;
-  border-radius: 10px;
+  width: 100px; 
+  box-shadow: 0  0 10px red;
+  padding-left: 10px;
 }
 .introduct .select-bg{
  width: 180px;
@@ -149,4 +153,23 @@
 }
 .introduct .selected{
   border:3px solid red;
+}
+.btn .cfg-option{
+  width: 120px;
+  height: 50px;
+  overflow: hidden;
+  border-radius: 10px;
+  outline: none;
+  animation: on-editor 3.5s linear 0s infinite normal;
+  padding-left: 20px;
+}
+@keyframes on-editor{
+  0%{
+      border: 1px solid red;
+      box-shadow: 0 0 10px red;
+  }
+  100%{
+      border: 1px solid #fff;
+      box-shadow: 0 0 10px #fff;
+  }
 }
