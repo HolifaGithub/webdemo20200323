@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import src from '../../image/template1.png'
 import './index.css'
 class TemplateItem extends Component {
     state = {
@@ -26,17 +25,17 @@ class TemplateItem extends Component {
     }
     render() {
         const { data,isLogin } = this.props
-        const {webname, cfgTitle,cfgDescribe,id } = data
+        const {webname, cfgTitle,cfgDescribe,id,templateSrc,path } = data
         return (
             <div className="template-item">
-                <img src={src} alt="" className='template-image' />
+                <img src={templateSrc} alt="" className='template-image' />
                 <div className='template-main'>
                     <div className='templatte-title'>{webname}</div>
                     <div className='template-btn'>
-                        {isLogin ? (<Link to={{ pathname: '/introduct', query: { type: 'editor',cfgTitle,cfgDescribe } }}>
+                        {isLogin ? (<Link to={{ pathname: path, query: { type: 'editor',cfgTitle,cfgDescribe } }}>
                             <div className='editor' onClick={() => { this.onEditorClick(isLogin) }}>编辑模板</div>
                         </Link>) : <div className='editor' onClick={() => { this.onEditorClick(isLogin) }}>编辑模板</div>}
-                        {isLogin ? (<Link to={{ pathname: '/introduct', query: { type: 'view' ,cfgTitle,cfgDescribe } }}>
+                        {isLogin ? (<Link to={{ pathname:path, query: { type: 'view' ,cfgTitle,cfgDescribe } }}>
                             <div className='view' onClick={()=>{this.onViewClick(isLogin)}}>预览模板</div>
                         </Link>) : <div className='view' onClick={()=>{this.onViewClick(isLogin)}}>预览模板</div>}
                     </div>

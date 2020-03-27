@@ -74,8 +74,9 @@ class Introduct extends Component {
     onSubmitClick() {
         let username = this.props.state.username
         let token = this.props.state.token
-        let { webname, cfgDescribe, cfgTitle,cfgBgColor,cfgFontColor,cfgImageSrc,cfgOption1,cfgOption3,moduleID } = this.state
-        let data = { webname, cfgDescribe, cfgTitle,cfgBgColor,cfgFontColor,cfgImageSrc,cfgOption1,cfgOption3,moduleID }
+        let { webname, cfgDescribe, cfgTitle,cfgBgColor,cfgFontColor,cfgImageSrc,moduleID,cfgOption1,cfgOption2,cfgOption3 } = this.state
+        const cfgMain=[cfgOption1,cfgOption2,cfgOption3]
+        let data = { webname, cfgDescribe, cfgTitle,cfgBgColor,cfgFontColor,cfgImageSrc,cfgMain,moduleID }
         // console.log(data);
         // axios.defaults.withCredentials=true
         axios.post(`http://121.36.102.75:8080/${token}/webcfg/commit/${username}`, data).then(res => {

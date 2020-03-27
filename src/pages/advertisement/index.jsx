@@ -13,7 +13,8 @@ import mouse from '../../image/template3/mouse.png'
 import phone from '../../image/template3/phone.png'
 import Footer from '../../components/footer'
 import '../../ihover.min.css'
-// import axios from 'axios'
+import Toast from '../../components/toast'
+import axios from 'axios'
 
 const mapStateToProps = (state) => {
     return { state }
@@ -31,7 +32,8 @@ class Advertisement extends Component {
         cfgFontColor: '#ffffff',
         cfgTitle: '极速建站',
         cfgMain: [{ cfgSub: '企业官网设计开发', cfgDescribe: '企业官网专属的高端定制化服务,解决方案，全面满足建设核心与运行管理,并提升企业品牌的有效传播。' }, { cfgSub: '平台功能型网站设计定制', cfgDescribe: '凭借多年的行业经验与专业团队,让各知名行业门户脱颖而出,从满足预期到走向卓越。' }, { cfgSub: 'HTML5响应式网站开发', cfgDescribe: 'HTML5+CSS3设计制作同时兼容,手机、IPAD等触屏设备分辨率，达到最优,访问效果，网站数据同步各终端。' }, { cfgSub: '移动端手机网站与APP', cfgDescribe: '专注移动端手机网站设计、微网站开发、APP定制开发，创造有活力的品牌网站，提升用户体验和品牌价值感。' }],
-        isView: false
+        isView: false,
+        isShowToast:false
     }
     onCfgTitleChange(event) {
         this.setState({ cfgTitle: event.target.value })
@@ -122,7 +124,39 @@ class Advertisement extends Component {
         })
     }
     onSubmitClick(){
-        console.log(this.state);
+        let username = this.props.state.username
+        let token = this.props.state.token
+        let { webname, moduleID,cfgBgColor,cfgFontColor,cfgTitle,cfgMain} = this.state
+        let data = { webname,  moduleID,cfgBgColor,cfgFontColor,cfgTitle,cfgMain}
+        // console.log(data);
+        // axios.defaults.withCredentials=true
+        axios.post(`http://121.36.102.75:8080/${token}/webcfg/commit/${username}`, data).then(res => {
+            console.log(res);
+            const data = res.data
+            if (data.code === 3001) {
+                this.type = 'success'
+                this.text = '提交成功！'
+                this.setState({ isShowToast: true }, () => {
+                    let timer = setTimeout(() => {
+                        this.setState({ isShowToast: false })
+                        clearTimeout(timer)
+                    }, 2000)
+                })
+            } else {
+                this.type = 'fail'
+                this.text = '提交失败！'
+                this.setState({ isShowToast: true }, () => {
+                    let timer = setTimeout(() => {
+                        this.setState({ isShowToast: false })
+                        clearTimeout(timer)
+                    }, 2000)
+                })
+            }
+        })
+        this.setState({
+            webname: '',
+            isView: true,
+        })
     }
     render() {
         return (
@@ -278,6 +312,7 @@ class Advertisement extends Component {
                     </div>
                 </div >
                 <Footer></Footer>
+                {this.state.isShowToast ? (<Toast type={this.type} text={this.text}></Toast>) : null}
             </div>
         );
     }

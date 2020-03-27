@@ -5,6 +5,8 @@ import logo from './image/logo.png'
 import banner from './image/banner.jpg'
 import notfound from './image/404.png'
 import template1 from './image/template1.png'
+import template2 from './image/template2.png'
+import template3 from './image/template3.png'
 import user from './image/user.png'
 import TemplateItem from './components/template-item/index'
 import axios from 'axios'
@@ -44,7 +46,19 @@ class App extends Component {
   }
   templateListDatas = [
     {
-      webname: '个人简介模板'
+      webname: '个人简介模板',
+      templateSrc:template1,
+      path:'/introduct'
+    },
+    {
+      webname: '旅游博客模板',
+      templateSrc:template2,
+      path:'/travel'
+    },
+    {
+      webname: '公司广告模板',
+      templateSrc:template3,
+      path:'/advertisement'
     }
   ]
   onLoginClick() {
@@ -94,6 +108,7 @@ class App extends Component {
     const token =this.props.state.token
     const username=this.props.state.username
     axios.get(`http://121.36.102.75:8080/${token}/webcfg/getall/${username}`).then(res => {
+      console.log(res);
       const data = res.data
       if(data.code===3002){
         const cfgList = data.cfgList

@@ -17,8 +17,9 @@ import banner4 from "../../static/images/4.jpg"
 import banner5 from "../../static/images/5.jpg"
 import bg1 from '../../image/template2/template2_bg1.jpg'
 import Slider from '../../static/js/index'
+import Toast from '../../components/toast'
 import '../../ihover.min.css'
-// import axios from 'axios'
+import axios from 'axios'
 
 const mapStateToProps = (state) => {
     return { state }
@@ -56,8 +57,11 @@ class Travel extends Component {
             cfgSub: '原野',
             cfgDescribe: '“野火烧不尽，春风吹又生”'
         }],
-        isView: false
+        isView: false,
+        isShowToast: false
     }
+    type = ''
+    text = ''
     componentDidMount() {
         // var sliderEl = document.getElementById('slider');
         // var slider = new Slider(sliderEl);
@@ -232,8 +236,41 @@ class Travel extends Component {
             }
         })
     }
-    onSubmitClick(){
-        console.log(this.state);
+    onSubmitClick() {
+        let username = this.props.state.username
+        let token = this.props.state.token
+        let { webname, moduleID,cfgContent1,cfgContent2,cfgContent3,cfgContent4,cfgImageSrc,cfgFontColor,cfgMain } = this.state
+        const cfgContent=[cfgContent1,cfgContent2,cfgContent3,cfgContent4]
+        let data = { webname,  moduleID,cfgContent,cfgImageSrc,cfgFontColor,cfgMain }
+        // console.log(data);
+        // axios.defaults.withCredentials=true
+        axios.post(`http://121.36.102.75:8080/${token}/webcfg/commit/${username}`, data).then(res => {
+            console.log(res);
+            const data = res.data
+            if (data.code === 3001) {
+                this.type = 'success'
+                this.text = '提交成功！'
+                this.setState({ isShowToast: true }, () => {
+                    let timer = setTimeout(() => {
+                        this.setState({ isShowToast: false })
+                        clearTimeout(timer)
+                    }, 2000)
+                })
+            } else {
+                this.type = 'fail'
+                this.text = '提交失败！'
+                this.setState({ isShowToast: true }, () => {
+                    let timer = setTimeout(() => {
+                        this.setState({ isShowToast: false })
+                        clearTimeout(timer)
+                    }, 2000)
+                })
+            }
+        })
+        this.setState({
+            webname: '',
+            isView: true,
+        })
     }
     render() {
         return (
@@ -574,10 +611,11 @@ class Travel extends Component {
                     }} />
                     <div id='btn'>
                         <div className='view' onClick={() => { this.onViewClick() }}>{this.state.isView ? '编辑' : '预览'}</div>
-                        <div className='submit' onClick={()=>{this.onSubmitClick()}}>提交</div>
+                        <div className='submit' onClick={() => { this.onSubmitClick() }}>提交</div>
                     </div>
                 </div>
                 <Footer></Footer>
+                {this.state.isShowToast ? (<Toast type={this.type} text={this.text}></Toast>) : null}
             </div>
         );
     }
