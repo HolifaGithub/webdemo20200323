@@ -264,13 +264,15 @@ class Slider {
 
     this.inTransit = true;
 
-    activeText.classList.add(backwardsClass);
-    activeText.classList.remove(this.ACTIVE_TEXT_CLASS);
-    activeText.addEventListener('transitionend', onTextTransitionEnd);
-
-    requestAnimationFrame(function () {
-      activeText.classList.remove(backwardsClass);
+    if(activeText.classList){
+      activeText.classList.add(backwardsClass);
+      activeText.classList.remove(this.ACTIVE_TEXT_CLASS);
+      activeText.addEventListener('transitionend', onTextTransitionEnd);
+  
+      requestAnimationFrame(function () {
+        activeText.classList.remove(backwardsClass);
     });
+  }
   };
 
   next() {

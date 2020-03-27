@@ -76,6 +76,7 @@
 }
 .title-and-description>input{
     margin-right: 30px;
+    width: 300px;
 }
 .travel-submit{
     width: 160px;

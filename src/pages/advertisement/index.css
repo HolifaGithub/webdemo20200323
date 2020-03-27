@@ -21,13 +21,17 @@
     right: 0;
     margin: 0 auto;
     opacity: 0.8;
-    width: 95%;
+    width: 100%;
     font-family: "KAITI";
-    transform: skew(-10deg);
-    background-image:linear-gradient(to right,#1A1B1D,#1B3044,#1A8388);
-    animation: h1 3.5s linear 0s infinite normal;
+    background-color: #203A4F;
+    /* transform: skew(-10deg); */
+    /* background-image:linear-gradient(to right,#1A1B1D,#1B3044,#1A8388); */
+   
 }
-@keyframes h1{
+.advertisement .wrapper h1.on-editor{
+    animation: advertisement-on-editor 3.5s linear 0s infinite normal;
+}
+@keyframes advertisement-on-editor{
     0%{
         border: 2px solid blue;
         box-shadow: 0 0 20px blue;
@@ -40,6 +44,16 @@
         border: 2px solid #fff;
         box-shadow: 0 0 20px #fff;
     }
+}
+div.wrap p.desc{
+    width: 300px;
+    height: 120px;
+}
+div.wrap p.on-editor{
+    animation: advertisement-on-editor 2.5s linear 0s infinite  normal;
+}
+div.wrap h2.on-editor{
+    animation: advertisement-on-editor 2.5s linear 0s infinite  normal;
 }
 .advertisement .wrapper ul{
     display: flex;
@@ -55,7 +69,6 @@
     padding-top: 150px;
     transition: all 1s;
     cursor: pointer;
-    animation: h1 2.5s linear 0s infinite    normal;
     border-radius: 10px;
 }
 .advertisement .wrapper ul>li:hover{
@@ -106,6 +119,7 @@
     border-radius: 50%;
     height: 120px;
     margin-bottom: 20px;
+    border:3px solid #fff;
 }
 .advertisement .wrapper ul>li div.img img{
     width: 300px;
@@ -115,4 +129,66 @@
 }
 .advertisement .wrapper ul>li div.img img:hover{
  opacity: 1;
+}
+.title-editor{
+    color:#fff;
+    font-weight: bold;
+    font-size: 21px;
+    padding-top: 30px;
+}
+.title-editor input{
+    margin-right: 50px;
+}
+div.wrap input{
+    height: 40px;
+    margin-bottom: 30px;
+}
+div.wrap textarea{
+    width: 220px;
+    height: 130px;
+    overflow: auto;
+    margin-bottom: 30px;
+}
+div#advertisement-submit{
+    width: 200px;
+    height: 120px;
+    background-color: #fff;
+    opacity: 0.8;
+    border-radius: 10px;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    color: red;
+    font-weight: bold;
+    padding-top: 20px;
+    box-shadow: 0 0 20px #777;
+}
+#advertisement-submit .advertisement-template-name{
+    padding-left: 10px;
+}
+#advertisement-submit .advertisement-template-name input{
+    width: 100px;
+    outline: none;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    padding-left: 10px;
+}
+#advertisement-submit .advertisement-btn{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+#advertisement-submit .advertisement-btn div{
+    width: 80px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    color: #fff;
+    border-radius: 10px;
+}
+#advertisement-submit .advertisement-btn div.view{
+    background-color: rgb(236, 236, 17);
+}
+#advertisement-submit .advertisement-btn div.submit{
+    background-color: red;
 }
