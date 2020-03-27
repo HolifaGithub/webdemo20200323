@@ -108,11 +108,26 @@ class App extends Component {
     const token =this.props.state.token
     const username=this.props.state.username
     axios.get(`http://121.36.102.75:8080/${token}/webcfg/getall/${username}`).then(res => {
-      console.log(res);
       const data = res.data
       if(data.code===3002){
         const cfgList = data.cfgList
-        this.setState({mytemplateListDatas:cfgList})
+        const _mytemplateListDatas=[]
+        for(let i=0;i<cfgList.length;i++){
+          _mytemplateListDatas[i]={}
+          _mytemplateListDatas[i].id=cfgList[i].id;
+          _mytemplateListDatas[i].webname=cfgList[i].webname;
+          if(cfgList[i].moduleID === 1){
+            _mytemplateListDatas[i].templateSrc=template1
+            _mytemplateListDatas[i].path='/introduct'
+          }else if(cfgList[i].moduleID === 2){
+            _mytemplateListDatas[i].templateSrc=template2
+            _mytemplateListDatas[i].path='/travel'
+          }else if(cfgList[i].moduleID === 3){
+            _mytemplateListDatas[i].templateSrc=template3
+            _mytemplateListDatas[i].path='/advertisement'
+          }
+        }
+        this.setState({mytemplateListDatas:_mytemplateListDatas})
       }
     })
   }

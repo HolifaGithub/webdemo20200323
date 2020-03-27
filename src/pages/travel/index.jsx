@@ -58,10 +58,57 @@ class Travel extends Component {
             cfgDescribe: '“野火烧不尽，春风吹又生”'
         }],
         isView: false,
-        isShowToast: false
+        isShowToast: false,
+        isOther: false,
+        isShow404: false
     }
     type = ''
     text = ''
+    count = 0
+    componentWillMount() {
+        const pathName = this.props.location.pathname
+        const locationArray = pathName.split('/')
+        let id = ''
+        if (locationArray.length === 4 && locationArray[2] === 'web') {
+            id = locationArray[3]
+        } else {
+            this.setState({ isShow404: true })
+        }
+
+        if (this.props.location.hasOwnProperty('query')) {
+            if (this.props.location.query.type) {
+                const type = this.props.location.query.type
+                if (type === 'editor') {
+                    this.setState({ isView: false })
+                } else if (type === 'view') {
+                    this.setState({ isView: true })
+                }
+            }
+            if (this.props.location.query.id) {
+                id = this.props.location.query.id
+            }
+        }
+        if (id) {
+            axios.get(`http://121.36.102.75:8080/web/${id}`).then(res => {
+                const data = res.data
+                if (data.code === 3004) {
+                    const cfgList = data.cfgList[0]
+                    this.setState({
+                        webname: cfgList.webname,
+                        cfgContent1: cfgList.cfgContent[0],
+                        cfgContent2: cfgList.cfgContent[1],
+                        cfgContent3: cfgList.cfgContent[2],
+                        cfgContent4: cfgList.cfgContent[3],
+                        cfgImageSrc: cfgList.cfgImageSrc,
+                        cfgFontColor: cfgList.cfgFontColor,
+                        cfgMain: cfgList.cfgMain,
+                        isOther: true,
+                        isView: true
+                    })
+                }
+            })
+        }
+    }
     componentDidMount() {
         // var sliderEl = document.getElementById('slider');
         // var slider = new Slider(sliderEl);
@@ -89,32 +136,37 @@ class Travel extends Component {
         // timer = setTimeout(autoSlide, 2000);
     }
     componentDidUpdate() {
-        var _sliderEl = document.getElementById('slider');
-        if (_sliderEl) {
-            var slider = new Slider(_sliderEl);
+        if (this.state.isView && this.count === 0) {
+            this.count++;
+            var _sliderEl = document.getElementById('slider');
+            // console.log(_sliderEl);
+            if (_sliderEl) {
+                var slider = new Slider(_sliderEl);
 
-            // ------------------ Demo stuff ------------------------ //
+                // ------------------ Demo stuff ------------------------ //
 
-            var timer = 0;
+                var timer = 0;
 
-            function autoSlide() {
-                requestAnimationFrame(function () {
-                    slider.next();
-                });
+                function autoSlide() {
+                    requestAnimationFrame(function () {
+                        slider.next();
+                    });
 
-                timer = setTimeout(autoSlide, 5000);
+                    timer = setTimeout(autoSlide, 5000);
+                }
+
+                function stopAutoSlide() {
+                    clearTimeout(timer);
+
+                    this.removeEventListener('touchstart', stopAutoSlide);
+                    this.removeEventListener('mousemove', stopAutoSlide);
+                }
+                _sliderEl.addEventListener('mousemove', stopAutoSlide);
+                _sliderEl.addEventListener('touchstart', stopAutoSlide)
+                timer = setTimeout(autoSlide, 2000);
             }
-
-            function stopAutoSlide() {
-                clearTimeout(timer);
-
-                this.removeEventListener('touchstart', stopAutoSlide);
-                this.removeEventListener('mousemove', stopAutoSlide);
-            }
-            _sliderEl.addEventListener('mousemove', stopAutoSlide);
-            _sliderEl.addEventListener('touchstart', stopAutoSlide)
-            timer = setTimeout(autoSlide, 2000);
         }
+
     }
     onCfgContent1Change(event) {
         this.setState({ cfgContent1: event.target.value })
@@ -239,11 +291,12 @@ class Travel extends Component {
     onSubmitClick() {
         let username = this.props.state.username
         let token = this.props.state.token
-        let { webname, moduleID,cfgContent1,cfgContent2,cfgContent3,cfgContent4,cfgImageSrc,cfgFontColor,cfgMain } = this.state
-        const cfgContent=[cfgContent1,cfgContent2,cfgContent3,cfgContent4]
-        let data = { webname,  moduleID,cfgContent,cfgImageSrc,cfgFontColor,cfgMain }
+        let { webname, moduleID, cfgContent1, cfgContent2, cfgContent3, cfgContent4, cfgImageSrc, cfgFontColor, cfgMain } = this.state
+        const cfgContent = [cfgContent1, cfgContent2, cfgContent3, cfgContent4]
+        let data = { webname, moduleID, cfgContent, cfgImageSrc, cfgFontColor, cfgMain }
         // console.log(data);
         // axios.defaults.withCredentials=true
+        console.log(data);
         axios.post(`http://121.36.102.75:8080/${token}/webcfg/commit/${username}`, data).then(res => {
             console.log(res);
             const data = res.data
@@ -269,7 +322,7 @@ class Travel extends Component {
         })
         this.setState({
             webname: '',
-            isView: true,
+            isView: true
         })
     }
     render() {
@@ -603,17 +656,19 @@ class Travel extends Component {
                         </div>
                     </div></a>
                 </div>)}
-                <div class='travel-submit'>
-                    <span>模板名：</span>
-                    <input type="text" onChange={(event) => {
-                        event.persist()
-                        this.onTemplateNameChange(event)
-                    }} />
-                    <div id='btn'>
-                        <div className='view' onClick={() => { this.onViewClick() }}>{this.state.isView ? '编辑' : '预览'}</div>
-                        <div className='submit' onClick={() => { this.onSubmitClick() }}>提交</div>
+                {!this.state.isOther ? (
+                    <div class='travel-submit'>
+                        <span>模板名：</span>
+                        <input type="text" onChange={(event) => {
+                            event.persist()
+                            this.onTemplateNameChange(event)
+                        }} />
+                        <div id='btn'>
+                            <div className='view' onClick={() => { this.onViewClick() }}>{this.state.isView ? '编辑' : '预览'}</div>
+                            <div className='submit' onClick={() => { this.onSubmitClick() }}>提交</div>
+                        </div>
                     </div>
-                </div>
+                ) : null}
                 <Footer></Footer>
                 {this.state.isShowToast ? (<Toast type={this.type} text={this.text}></Toast>) : null}
             </div>

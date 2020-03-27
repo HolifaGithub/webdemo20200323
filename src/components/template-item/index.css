@@ -7,6 +7,7 @@
     margin-left: 20px;
     text-decoration: none;
     transition: all 0.75;
+    position: relative;
 }
 .template-item:hover{
     transform: scale(0.96) translate(10px);
@@ -77,4 +78,18 @@
     right: 0;
     margin: 0 auto;
     top: 200px;
+}
+#template-id{
+    border-top-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    width: 80px;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+    background-color: red;
+    color: #fff;
+    position: absolute;
+    top: 0;
+    left: 0;   
+    z-index: 999; 
 }

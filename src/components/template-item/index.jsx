@@ -24,23 +24,26 @@ class TemplateItem extends Component {
         }
     }
     render() {
-        const { data,isLogin } = this.props
-        const {webname, cfgTitle,cfgDescribe,id,templateSrc,path } = data
+        const { data, isLogin } = this.props
+        const { webname, id, templateSrc, path } = data
         return (
             <div className="template-item">
                 <img src={templateSrc} alt="" className='template-image' />
                 <div className='template-main'>
                     <div className='templatte-title'>{webname}</div>
                     <div className='template-btn'>
-                        {isLogin ? (<Link to={{ pathname: path, query: { type: 'editor',cfgTitle,cfgDescribe } }}>
-                            <div className='editor' onClick={() => { this.onEditorClick(isLogin) }}>编辑模板</div>
-                        </Link>) : <div className='editor' onClick={() => { this.onEditorClick(isLogin) }}>编辑模板</div>}
-                        {isLogin ? (<Link to={{ pathname:path, query: { type: 'view' ,cfgTitle,cfgDescribe } }}>
-                            <div className='view' onClick={()=>{this.onViewClick(isLogin)}}>预览模板</div>
-                        </Link>) : <div className='view' onClick={()=>{this.onViewClick(isLogin)}}>预览模板</div>}
+                        {id ? null : (<div>
+                            {isLogin ? (<Link to={{ pathname: path, query: { type: 'editor', id } }}>
+                                <div className='editor' onClick={() => { this.onEditorClick(isLogin) }}>编辑模板</div>
+                            </Link>) : <div className='editor' onClick={() => { this.onEditorClick(isLogin) }}>编辑模板</div>}
+                        </div>)}
+                        {isLogin ? (<Link to={{ pathname: path, query: { type: 'view', id } }}>
+                            <div className='view' onClick={() => { this.onViewClick(isLogin) }}>预览模板</div>
+                        </Link>) : <div className='view' onClick={() => { this.onViewClick(isLogin) }}>预览模板</div>}
                     </div>
                 </div>
                 {this.state.isShowTip ? <div className='tip'>您还未登录，请先登录！</div> : null}
+                {id ? (<div id='template-id'>模板ID:{id}</div>) : null}
             </div>
         );
     }

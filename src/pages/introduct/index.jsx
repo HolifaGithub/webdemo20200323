@@ -30,15 +30,26 @@ class Introduct extends Component {
         cfgBgColor: '#ffffff',
         cfgFontColor: '#000000',
         cfgImageSrc: bg1,
-        cfgOption1:'关于',
-        cfgOption2:'工作',
-        cfgOption3:'联系',
-        moduleID:1
+        cfgOption1: '关于',
+        cfgOption2: '工作',
+        cfgOption3: '联系',
+        moduleID: 1,
+        isOther: false,
+        isShow404: false
     }
     type = ''
     text = ''
-    componentDidMount() {
-        if(this.props.location.hasOwnProperty('query')){
+    componentWillMount() {
+        const pathName = this.props.location.pathname
+        const locationArray = pathName.split('/')
+        let id = ''
+        if (locationArray.length === 4 && locationArray[2] === 'web') {
+            id = locationArray[3]
+        } else {
+            this.setState({ isShow404: true })
+        }
+
+        if (this.props.location.hasOwnProperty('query')) {
             if (this.props.location.query.type) {
                 const type = this.props.location.query.type
                 if (type === 'editor') {
@@ -47,13 +58,32 @@ class Introduct extends Component {
                     this.setState({ isView: true })
                 }
             }
+            if (this.props.location.query.id) {
+                id = this.props.location.query.id
+            }
         }
-        // if (this.props.location.query.cfgTitle) {
-        //     this.setState({ cfgTitle: this.props.location.query.cfgTitle })
-        // }
-        // if (this.props.location.query.cfgDescribe) {
-        //     this.setState({ cfgDescribe: this.props.location.query.cfgDescribe })
-        // }
+        if (id) {
+            axios.get(`http://121.36.102.75:8080/web/${id}`).then(res => {
+                const data = res.data
+                if (data.code === 3004) {
+                    const cfgList = data.cfgList[0]
+                    this.setState({
+                        cfgTitle: cfgList.cfgTitle,
+                        cfgDescribe: cfgList.Describe,
+                        webname: cfgList.webname,
+                        isView: false,
+                        cfgBgColor: cfgList.cfgBgColor,
+                        cfgFontColor: cfgList.cfgFontColor,
+                        cfgImageSrc: cfgList.cfgImageSrc,
+                        cfgOption1: cfgList.cfgOption[0],
+                        cfgOption2: cfgList.cfgOption[1],
+                        cfgOption3: cfgList.cfgOption[2],
+                        isOther: true,
+                        isView: true
+                    })
+                }
+            })
+        }
     }
     onNickNameChange(event) {
         this.setState({ cfgTitle: event.target.value })
@@ -74,9 +104,9 @@ class Introduct extends Component {
     onSubmitClick() {
         let username = this.props.state.username
         let token = this.props.state.token
-        let { webname, cfgDescribe, cfgTitle,cfgBgColor,cfgFontColor,cfgImageSrc,moduleID,cfgOption1,cfgOption2,cfgOption3 } = this.state
-        const cfgMain=[cfgOption1,cfgOption2,cfgOption3]
-        let data = { webname, cfgDescribe, cfgTitle,cfgBgColor,cfgFontColor,cfgImageSrc,cfgMain,moduleID }
+        let { webname, cfgDescribe, cfgTitle, cfgBgColor, cfgFontColor, cfgImageSrc, moduleID, cfgOption1, cfgOption2, cfgOption3 } = this.state
+        const cfgOption = [cfgOption1, cfgOption2, cfgOption3]
+        let data = { webname, cfgDescribe, cfgTitle, cfgBgColor, cfgFontColor, cfgImageSrc, cfgOption, moduleID }
         // console.log(data);
         // axios.defaults.withCredentials=true
         axios.post(`http://121.36.102.75:8080/${token}/webcfg/commit/${username}`, data).then(res => {
@@ -118,13 +148,13 @@ class Introduct extends Component {
         const selectedBg = element.getAttribute('data-name')
         this.setState({ cfgImageSrc: selectedBg })
     }
-    onCfgOption1Change(event){
+    onCfgOption1Change(event) {
         this.setState({ cfgOption1: event.target.value })
     }
-    onCfgOption2Change(event){
+    onCfgOption2Change(event) {
         this.setState({ cfgOption2: event.target.value })
     }
-    onCfgOption3Change(event){
+    onCfgOption3Change(event) {
         this.setState({ cfgOption3: event.target.value })
     }
     render() {
@@ -132,7 +162,7 @@ class Introduct extends Component {
         return (
             <div>
                 <div className="introduct">
-                    {this.state.isView ? (<img src={this.state.cfgImageSrc} alt='' className={'left-image'}></img>) : (<div className="ih-item square colored effect15 left_to_right" style={{ width: '50%', height: '833px', animation: 'on-editor 3.5s linear 0s infinite normal '}}>
+                    {this.state.isView ? (<img src={this.state.cfgImageSrc} alt='' className={'left-image'}></img>) : (<div className="ih-item square colored effect15 left_to_right" style={{ width: '50%', height: '833px', animation: 'on-editor 3.5s linear 0s infinite normal ' }}>
                         <a href="javascript:void(0);">
                             <div className="img"><img src={this.state.cfgImageSrc} alt="img" style={{ width: '100%', height: '833px' }} /></div>
                             <div className="info" style={{ backgroundColor: '#333' }}>
@@ -150,29 +180,29 @@ class Introduct extends Component {
                     </div>)}
                     <div className='right' style={{ backgroundColor: this.state.cfgBgColor }}>
                         <img src={logo} alt='' className='logo'></img>
-                        <div className='nick-name' style={{ color: this.state.cfgFontColor }}> 
-                            {!this.state.isView ? (<input type='text' value={this.state.cfgTitle} onChange={(event) => { this.onNickNameChange(event) }} className='nick-name-input' style={{color:this.state.cfgFontColor}}></input>) : <div> {this.state.cfgTitle }</div>}
+                        <div className='nick-name' style={{ color: this.state.cfgFontColor }}>
+                            {!this.state.isView ? (<input type='text' value={this.state.cfgTitle} onChange={(event) => { this.onNickNameChange(event) }} className='nick-name-input' style={{ color: this.state.cfgFontColor }}></input>) : <div> {this.state.cfgTitle}</div>}
                         </div>
                         <div className='describe' style={{ color: this.state.cfgFontColor }}>
                             {!this.state.isView ? (<textarea type="text" value={this.state.cfgDescribe} onChange={(event) => {
                                 this.onDescribeChange(event)
-                            }} className='describe-input' style={{color:this.state.cfgFontColor}}/>) : <div>{this.state.cfgDescribe}</div>}
+                            }} className='describe-input' style={{ color: this.state.cfgFontColor }} />) : <div>{this.state.cfgDescribe}</div>}
                         </div>
                         <div className="right-bottom" style={{ color: this.state.cfgFontColor }}>
-                        <div  className='btn'>
-                            {!this.state.isView?(<input type='text' value={this.state.cfgOption1} className='cfg-option' onChange={(event)=>{this.onCfgOption1Change(event)}}></input>):this.state.cfgOption1}
-                        </div>
-                            <div  className='btn'>
-                            {!this.state.isView?(<input type='text' value={this.state.cfgOption2} className='cfg-option' onChange={(event)=>{this.onCfgOption2Change(event)}}></input>):this.state.cfgOption2}
+                            <div className='btn'>
+                                {!this.state.isView ? (<input type='text' value={this.state.cfgOption1} className='cfg-option' onChange={(event) => { this.onCfgOption1Change(event) }}></input>) : this.state.cfgOption1}
                             </div>
                             <div className='btn'>
-                            {!this.state.isView?(<input type='text' value={this.state.cfgOption3} className='cfg-option' onChange={(event)=>{this.onCfgOption3Change(event)}}></input>):this.state.cfgOption3}
+                                {!this.state.isView ? (<input type='text' value={this.state.cfgOption2} className='cfg-option' onChange={(event) => { this.onCfgOption2Change(event) }}></input>) : this.state.cfgOption2}
+                            </div>
+                            <div className='btn'>
+                                {!this.state.isView ? (<input type='text' value={this.state.cfgOption3} className='cfg-option' onChange={(event) => { this.onCfgOption3Change(event) }}></input>) : this.state.cfgOption3}
                             </div>
                         </div>
                     </div>
                 </div>
                 <Footer></Footer>
-                <div className='submit-container'>
+                {!this.state.isOther ? (<div className='submit-container'>
                     <div className='template-name'>
                         <div>模板名称：</div>
                         <input type="text" value={this.state.webname} onChange={(event) => {
@@ -191,7 +221,7 @@ class Introduct extends Component {
                         <div className='view-btn' onClick={() => { this.onViewClick() }}>{this.state.isView ? '编辑' : '预览'}</div>
                         <div className='submit-btn' onClick={() => { this.onSubmitClick() }}>提交</div>
                     </div>
-                </div>
+                </div>) : null}
                 {this.state.isShowToast ? (<Toast type={this.type} text={this.text}></Toast>) : null}
             </div>
         );

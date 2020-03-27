@@ -31,6 +31,9 @@
 .advertisement .wrapper h1.on-editor{
     animation: advertisement-on-editor 3.5s linear 0s infinite normal;
 }
+.advertisement  input.on-editor,.advertisement  textarea.on-editor{
+    background-color: #888;
+}
 @keyframes advertisement-on-editor{
     0%{
         border: 2px solid blue;
@@ -162,6 +165,7 @@ div#advertisement-submit{
     font-weight: bold;
     padding-top: 20px;
     box-shadow: 0 0 20px #777;
+    z-index: 999;
 }
 #advertisement-submit .advertisement-template-name{
     padding-left: 10px;
@@ -192,3 +196,33 @@ div#advertisement-submit{
 #advertisement-submit .advertisement-btn div.submit{
     background-color: red;
 }
+/* .select-bg-image{
+    background-image: linear-gradient(to bottom,#111,#000);
+    width: 100px;
+    height: 400px;
+    position: fixed;
+    justify-content: center;
+    align-items: center;
+    right: 5px;
+    top: 140px;
+    box-shadow: 0 0 25px blue;
+    transition: all 2.5s;
+    opacity: 0.7;
+    text-align: center;
+    border-radius: 20px;
+    padding-top: 28px;
+}
+.select-bg-image:hover{
+    opacity: 1;
+    background-image: linear-gradient(to bottom,#1F6CBA,#aaa);
+}
+.select-bg-image>img{
+    width: 80px;
+    height: 80px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    border:1px solid #fff;
+}
+.select-bg-image>img.selected{
+    border:3px solid blue;
+} */

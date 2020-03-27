@@ -158,7 +158,9 @@ class Slider {
     var yCoeff = _ref5.yCoeff;
 
     var maxImgOffset = 1;
-    var currentImage = this.activeImg[0].children[0];
+    if(this.activeImg[0].children!==undefined){
+      var currentImage = this.activeImg[0].children[0]; 
+    }
 
     currentImage.style.setProperty('transform', '\n      translateX(' + maxImgOffset * -xCoeff + 'em)\n      translateY(' + maxImgOffset * yCoeff + 'em)\n    ');
   };
@@ -263,8 +265,7 @@ class Slider {
     var self = this;
 
     this.inTransit = true;
-
-    if(activeText.classList){
+    if(activeText.classList !==undefined){
       activeText.classList.add(backwardsClass);
       activeText.classList.remove(this.ACTIVE_TEXT_CLASS);
       activeText.addEventListener('transitionend', onTextTransitionEnd);
