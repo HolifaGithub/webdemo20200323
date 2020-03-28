@@ -85,7 +85,7 @@
 }
 .main-container .main-right{
     width: 100%;
-    height: 800px;
+    min-height: 800px;
     background-color: #EAF0F7;
     display: flex;
     justify-content: space-around;
