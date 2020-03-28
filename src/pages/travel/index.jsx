@@ -110,64 +110,32 @@ class Travel extends Component {
         }
     }
     componentDidMount() {
-        // var sliderEl = document.getElementById('slider');
-        // var slider = new Slider(sliderEl);
+        var sliderEl = document.getElementById('slider');
+        var slider = new Slider(sliderEl);
 
-        // // ------------------ Demo stuff ------------------------ //
+        // ------------------ Demo stuff ------------------------ //
 
-        // var timer = 0;
+        var timer = 0;
 
-        // function autoSlide() {
-        //     requestAnimationFrame(function () {
-        //         slider.next();
-        //     });
+        function autoSlide() {
+            requestAnimationFrame(function () {
+                slider.next();
+            });
 
-        //     timer = setTimeout(autoSlide, 5000);
-        // }
-
-        // function stopAutoSlide() {
-        //     clearTimeout(timer);
-
-        //     this.removeEventListener('touchstart', stopAutoSlide);
-        //     this.removeEventListener('mousemove', stopAutoSlide);
-        // }
-        // sliderEl.addEventListener('mousemove', stopAutoSlide);
-        // sliderEl.addEventListener('touchstart', stopAutoSlide)
-        // timer = setTimeout(autoSlide, 2000);
-    }
-    componentDidUpdate() {
-        if (this.state.isView && this.count === 0) {
-            this.count++;
-            var _sliderEl = document.getElementById('slider');
-            // console.log(_sliderEl);
-            if (_sliderEl) {
-                var slider = new Slider(_sliderEl);
-
-                // ------------------ Demo stuff ------------------------ //
-
-                var timer = 0;
-
-                function autoSlide() {
-                    requestAnimationFrame(function () {
-                        slider.next();
-                    });
-
-                    timer = setTimeout(autoSlide, 5000);
-                }
-
-                function stopAutoSlide() {
-                    clearTimeout(timer);
-
-                    this.removeEventListener('touchstart', stopAutoSlide);
-                    this.removeEventListener('mousemove', stopAutoSlide);
-                }
-                _sliderEl.addEventListener('mousemove', stopAutoSlide);
-                _sliderEl.addEventListener('touchstart', stopAutoSlide)
-                timer = setTimeout(autoSlide, 2000);
-            }
+            timer = setTimeout(autoSlide, 5000);
         }
 
+        function stopAutoSlide() {
+            clearTimeout(timer);
+
+            this.removeEventListener('touchstart', stopAutoSlide);
+            this.removeEventListener('mousemove', stopAutoSlide);
+        }
+        sliderEl.addEventListener('mousemove', stopAutoSlide);
+        sliderEl.addEventListener('touchstart', stopAutoSlide)
+        timer = setTimeout(autoSlide, 2000);
     }
+
     onCfgContent1Change(event) {
         this.setState({ cfgContent1: event.target.value })
     }
@@ -455,74 +423,9 @@ class Travel extends Component {
                         </div>
                     </div></a>
                 </div>)}
-                {this.state.isView ? (<div className="slider" id="slider" >
-                    <div className="slider__content" id="slider-content">
-                        <div className="slider__images">
-                            <div className="slider__images-item slider__images-item--active" data-id="1"><img src={banner1} alt="" /></div>
-                            <div className="slider__images-item" data-id="2"><img src={banner2} alt="" /></div>
-                            <div className="slider__images-item" data-id="3"><img src={banner3} alt="" /></div>
-                            <div className="slider__images-item" data-id="4"><img src={banner4} alt="" /></div>
-                            <div className="slider__images-item" data-id="5"><img src={banner5} alt="" /></div>
-                        </div>
-                        <div className="slider__text" style={{ color: this.state.cfgFontColor }}>
-                            <div className="slider__text-item slider__text-item--active" data-id="1">
-                                <div className="slider__text-item-head">
-                                    <h3>{this.state.cfgMain[0].cfgSub}</h3>
-                                </div>
-                                <div className="slider__text-item-info">
-                                    <p style={{ color: this.state.cfgFontColor }}>{this.state.cfgMain[0].cfgDescribe}</p>
-                                </div>
-                            </div>
-                            <div className="slider__text-item" data-id="2">
-                                <div className="slider__text-item-head">
-                                    <h3>{this.state.cfgMain[1].cfgSub}</h3>
-                                </div>
-                                <div className="slider__text-item-info">
-                                    <p style={{ color: this.state.cfgFontColor }}>{this.state.cfgMain[1].cfgDescribe}</p>
-                                </div>
-                            </div>
-                            <div className="slider__text-item" data-id="3">
-                                <div className="slider__text-item-head">
-                                    <h3>{this.state.cfgMain[2].cfgSub}</h3>
-                                </div>
-                                <div className="slider__text-item-info">
-                                    <p style={{ color: this.state.cfgFontColor }}>{this.state.cfgMain[2].cfgDescribe}</p>
-                                </div>
-                            </div>
-                            <div className="slider__text-item" data-id="4">
-                                <div className="slider__text-item-head">
-                                    <h3>{this.state.cfgMain[3].cfgSub}</h3>
-                                </div>
-                                <div className="slider__text-item-info">
-                                    <p style={{ color: this.state.cfgFontColor }}>{this.state.cfgMain[3].cfgDescribe}</p>
-                                </div>
-                            </div>
-                            <div className="slider__text-item" data-id="5">
-                                <div className="slider__text-item-head">
-                                    <h3>{this.state.cfgMain[4].cfgSub}</h3>
-                                </div>
-                                <div className="slider__text-item-info">
-                                    <p style={{ color: this.state.cfgFontColor }}>{this.state.cfgMain[4].cfgDescribe}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="slider__nav">
-                        <div className="slider__nav-arrows">
-                            <div className="slider__nav-arrow slider__nav-arrow--left" id="left">to left</div>
-                            <div className="slider__nav-arrow slider__nav-arrow--right" id="right">to right</div>
-                        </div>
-                        <div className="slider__nav-dots" id="slider-dots">
-                            <div className="slider__nav-dot slider__nav-dot--active" data-id="1"></div>
-                            <div className="slider__nav-dot" data-id="2"></div>
-                            <div className="slider__nav-dot" data-id="3"></div>
-                            <div className="slider__nav-dot" data-id="4"></div>
-                            <div className="slider__nav-dot" data-id="5"></div>
-                        </div>
-                    </div>
-                </div>) : (<div class="ih-item square effect7" style={{ width: '100%', height: '730px' }}><a href="javascript:void(0);">
+                {(<div className={this.state.isView?'':"ih-item square effect7"} style={{ width: '100%', height: '730px' }}><a href="javascript:void(0);">
                     <div class="img">
-                        <div className="slider" id="slider1" >
+                        <div className="slider" id="slider" >
                             <div className="slider__content" id="slider-content">
                                 <div className="slider__images">
                                     <div className="slider__images-item slider__images-item--active" data-id="1"><img src={banner1} alt="" /></div>
@@ -589,7 +492,7 @@ class Travel extends Component {
                             </div>
                         </div>
                     </div>
-                    <div class="info">
+                    {this.state.isView?null:(  <div class="info">
                         <h3>自定义标题和描述：</h3>
                         <p>Defined Title And Description</p>
                         <div>
@@ -654,7 +557,8 @@ class Travel extends Component {
                                 }} value={this.state.cfgMain[4].cfgDescribe}></input>
                             </div>
                         </div>
-                    </div></a>
+                    </div>)}
+                  </a>
                 </div>)}
                 {!this.state.isOther ? (
                     <div class='travel-submit'>
