@@ -345,7 +345,7 @@ class Travel extends Component {
                         <nav className="navbar">
                             <div className="container">
                                 <h1 className="wthree-logo">
-                                    <a href="main.html" id="logoLink"><img src={logo} alt='' /></a>
+                                    <a href="javascript:void(0);" id="logoLink"><img src={logo} alt='' /></a>
                                 </h1>
                                 {/* <ul id="menu" >
                                 <li>
@@ -397,7 +397,7 @@ class Travel extends Component {
                                 <nav className="navbar">
                                     <div className="container">
                                         <h1 className="wthree-logo">
-                                            <a href="main.html" id="logoLink"><img src={logo} alt='' /></a>
+                                            <a href="javascript:void(0);" id="logoLink"><img src={logo} alt='' /></a>
                                         </h1>
                                         {/* <ul id="menu" >
                                 <li>
