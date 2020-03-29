@@ -60,12 +60,17 @@ class Travel extends Component {
         isView: false,
         isShowToast: false,
         isOther: false,
-        isShow404: false
+        isShow404: false,
+        id:0
     }
     type = ''
     text = ''
     count = 0
+    isFromChange=false
     componentWillMount() {
+        this.fetchPageDatas()
+    }
+    fetchPageDatas(){
         const pathName = this.props.location.pathname
         const locationArray = pathName.split('/')
         let id = ''
@@ -87,12 +92,16 @@ class Travel extends Component {
             if (this.props.location.query.id) {
                 id = this.props.location.query.id
             }
+            if(this.props.location.query.isFromChange){
+                this.isFromChange=this.props.location.query.isFromChange
+            }
         }
         if (id) {
             axios.get(`http://121.36.102.75:8080/web/${id}`).then(res => {
                 const data = res.data
                 if (data.code === 3004) {
                     const cfgList = data.cfgList[0]
+                    console.log(cfgList);
                     this.setState({
                         webname: cfgList.webname,
                         cfgContent1: cfgList.cfgContent[0],
@@ -103,7 +112,8 @@ class Travel extends Component {
                         cfgFontColor: cfgList.cfgFontColor,
                         cfgMain: cfgList.cfgMain,
                         isOther: true,
-                        isView: true
+                        isView: true,
+                        id:id
                     })
                 }
             })
@@ -264,7 +274,7 @@ class Travel extends Component {
         let data = { webname, moduleID, cfgContent, cfgImageSrc, cfgFontColor, cfgMain }
         // console.log(data);
         // axios.defaults.withCredentials=true
-        console.log(data);
+        // console.log(data);
         axios.post(`http://121.36.102.75:8080/${token}/webcfg/commit/${username}`, data).then(res => {
             console.log(res);
             const data = res.data
@@ -273,9 +283,11 @@ class Travel extends Component {
                 this.text = '提交成功！'
                 this.setState({ isShowToast: true }, () => {
                     let timer = setTimeout(() => {
-                        this.setState({ isShowToast: false })
+                        this.setState({ isShowToast: false },()=>{
+                            this.props.history.goBack()
+                        })
                         clearTimeout(timer)
-                    }, 2000)
+                    }, 1000)
                 })
             } else {
                 this.type = 'fail'
@@ -291,6 +303,38 @@ class Travel extends Component {
         this.setState({
             webname: '',
             isView: true
+        })
+    }
+    onSubmitChangeClick(){
+        let username = this.props.state.username
+        let token = this.props.state.token
+        let { webname, moduleID, cfgContent1, cfgContent2, cfgContent3, cfgContent4, cfgImageSrc, cfgFontColor, cfgMain,id } = this.state
+        const cfgContent = [cfgContent1, cfgContent2, cfgContent3, cfgContent4]
+        let data = { webname, moduleID, cfgContent, cfgImageSrc, cfgFontColor, cfgMain,id }
+        axios.post(`http://121.36.102.75:8080/${token}/webcfg/commit/${username}`, data).then(res => {
+            console.log(res);
+            const data = res.data
+            if (data.code === 3001) {
+                this.type = 'success'
+                this.text = '提交修改成功！'
+                this.setState({ isShowToast: true }, () => {
+                    let timer = setTimeout(() => {
+                        this.setState({ isShowToast: false },()=>{
+                            this.props.history.goBack()
+                        })
+                        clearTimeout(timer)
+                    }, 1000)
+                })
+            } else {
+                this.type = 'fail'
+                this.text = '提交修改失败！'
+                this.setState({ isShowToast: true }, () => {
+                    let timer = setTimeout(() => {
+                        this.setState({ isShowToast: false })
+                        clearTimeout(timer)
+                    }, 2000)
+                })
+            }
         })
     }
     render() {
@@ -560,16 +604,16 @@ class Travel extends Component {
                     </div>)}
                   </a>
                 </div>)}
-                {!this.state.isOther ? (
+                {!this.state.isOther||this.isFromChange ? (
                     <div class='travel-submit'>
                         <span>模板名：</span>
                         <input type="text" onChange={(event) => {
                             event.persist()
                             this.onTemplateNameChange(event)
-                        }} />
+                        }} value={this.state.webname}/>
                         <div id='btn'>
                             <div className='view' onClick={() => { this.onViewClick() }}>{this.state.isView ? '编辑' : '预览'}</div>
-                            <div className='submit' onClick={() => { this.onSubmitClick() }}>提交</div>
+                          {!this.isFromChange?(  <div className='submit' onClick={() => { this.onSubmitClick() }}>提交</div>):(  <div className='submit' onClick={() => { this.onSubmitChangeClick() }}>提交修改</div>)}
                         </div>
                     </div>
                 ) : null}

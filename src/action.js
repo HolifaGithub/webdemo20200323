@@ -1,4 +1,4 @@
-import {LOGIN,CANCEL_LOGIN,SET_USER_NAME,SET_TOKEN} from './constant'
+import {LOGIN,CANCEL_LOGIN,SET_USER_NAME,SET_TOKEN,REFETCH_MY_TEMPLATE_DATAS} from './constant'
 
 const login =()=>{
     return {
@@ -26,4 +26,9 @@ const setToken=(data)=>{
     }
 }
 
-export  {login,cancelLogin,setUserName,setToken}
+const refetchMyTemplateDatas=()=>{
+    return {
+        type:REFETCH_MY_TEMPLATE_DATAS,
+    }
+}
+export  {login,cancelLogin,setUserName,setToken,refetchMyTemplateDatas}

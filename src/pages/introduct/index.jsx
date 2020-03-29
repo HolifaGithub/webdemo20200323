@@ -29,17 +29,23 @@ class Introduct extends Component {
         isView: false,
         cfgBgColor: '#ffffff',
         cfgFontColor: '#000000',
-        cfgImageSrc: bg1,
+        cfgImageSrc: bg2,
         cfgOption1: '关于',
         cfgOption2: '工作',
         cfgOption3: '联系',
         moduleID: 1,
         isOther: false,
-        isShow404: false
+        isShow404: false,
+        id:0
     }
     type = ''
     text = ''
+    isFromChange=false
+    
     componentWillMount() {
+        this.fetchPageDatas()
+    }
+    fetchPageDatas(){
         const pathName = this.props.location.pathname
         const locationArray = pathName.split('/')
         let id = ''
@@ -61,6 +67,9 @@ class Introduct extends Component {
             if (this.props.location.query.id) {
                 id = this.props.location.query.id
             }
+            if(this.props.location.query.isFromChange){
+                this.isFromChange=this.props.location.query.isFromChange
+            }
         }
         if (id) {
             axios.get(`http://121.36.102.75:8080/web/${id}`).then(res => {
@@ -69,7 +78,7 @@ class Introduct extends Component {
                     const cfgList = data.cfgList[0]
                     this.setState({
                         cfgTitle: cfgList.cfgTitle,
-                        cfgDescribe: cfgList.Describe,
+                        cfgDescribe: cfgList.cfgDescribe,
                         webname: cfgList.webname,
                         isView: false,
                         cfgBgColor: cfgList.cfgBgColor,
@@ -79,7 +88,8 @@ class Introduct extends Component {
                         cfgOption2: cfgList.cfgOption[1],
                         cfgOption3: cfgList.cfgOption[2],
                         isOther: true,
-                        isView: true
+                        isView: true,
+                        id:id
                     })
                 }
             })
@@ -101,6 +111,7 @@ class Introduct extends Component {
     onWebNameChange(event) {
         this.setState({ webname: event.target.value })
     }
+
     onSubmitClick() {
         let username = this.props.state.username
         let token = this.props.state.token
@@ -117,9 +128,11 @@ class Introduct extends Component {
                 this.text = '提交成功！'
                 this.setState({ isShowToast: true }, () => {
                     let timer = setTimeout(() => {
-                        this.setState({ isShowToast: false })
+                        this.setState({ isShowToast: false },()=>{
+                            this.props.history.goBack()
+                        })
                         clearTimeout(timer)
-                    }, 2000)
+                    }, 1000)
                 })
             } else {
                 this.type = 'fail'
@@ -156,6 +169,38 @@ class Introduct extends Component {
     }
     onCfgOption3Change(event) {
         this.setState({ cfgOption3: event.target.value })
+    }
+    onSubmitChangeClick(){
+        let username = this.props.state.username
+        let token = this.props.state.token
+        let { webname, cfgDescribe, cfgTitle, cfgBgColor, cfgFontColor, cfgImageSrc, moduleID, cfgOption1, cfgOption2, cfgOption3,id} = this.state
+        const cfgOption = [cfgOption1, cfgOption2, cfgOption3]
+        let data = { webname, cfgDescribe, cfgTitle, cfgBgColor, cfgFontColor, cfgImageSrc, cfgOption, moduleID,id }
+        axios.post(`http://121.36.102.75:8080/${token}/webcfg/commit/${username}`, data).then(res => {
+            console.log(res);
+            const data = res.data
+            if (data.code === 3001) {
+                this.type = 'success'
+                this.text = '提交修改成功！'
+                this.setState({ isShowToast: true }, () => {
+                    let timer = setTimeout(() => {
+                        this.setState({ isShowToast: false },()=>{
+                            this.props.history.goBack()
+                        })
+                        clearTimeout(timer)
+                    }, 1000)
+                })
+            } else {
+                this.type = 'fail'
+                this.text = '提交修改失败！'
+                this.setState({ isShowToast: true }, () => {
+                    let timer = setTimeout(() => {
+                        this.setState({ isShowToast: false })
+                        clearTimeout(timer)
+                    }, 2000)
+                })
+            }
+        })
     }
     render() {
         // console.log(this.state.cfgDescribe,this.state.cfgTitle);
@@ -202,7 +247,7 @@ class Introduct extends Component {
                     </div>
                 </div>
                 <Footer></Footer>
-                {!this.state.isOther ? (<div className='submit-container'>
+                {!this.state.isOther||this.isFromChange ? (<div className='submit-container'>
                     <div className='template-name'>
                         <div>模板名称：</div>
                         <input type="text" value={this.state.webname} onChange={(event) => {
@@ -219,7 +264,7 @@ class Introduct extends Component {
                     </div>
                     <div className='submit'>
                         <div className='view-btn' onClick={() => { this.onViewClick() }}>{this.state.isView ? '编辑' : '预览'}</div>
-                        <div className='submit-btn' onClick={() => { this.onSubmitClick() }}>提交</div>
+                        {!this.isFromChange ?(<div className='submit-btn' onClick={() => { this.onSubmitClick() }}>提交</div>):(<div className='submit-btn' onClick={() => { this.onSubmitChangeClick() }}>提交修改</div>)}
                     </div>
                 </div>) : null}
                 {this.state.isShowToast ? (<Toast type={this.type} text={this.text}></Toast>) : null}

@@ -111,7 +111,7 @@ class Footer extends Component {
                             </div>
                         </dl>
                     </div>
-                    <div className="footer-friend">
+                    {/* <div className="footer-friend">
                         <div className="footer-friend-title">友情链接：</div>
                         <ul className="footer-friend-title-list clearfix">
                             <li>
@@ -159,7 +159,7 @@ class Footer extends Component {
                                 <img src={footer} alt="" />**网安备 0008899999xxxx号
                     </a>
                         </p>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         );

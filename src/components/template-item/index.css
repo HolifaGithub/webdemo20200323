@@ -6,12 +6,12 @@
     margin-top: 20px;
     margin-left: 20px;
     text-decoration: none;
-    transition: all 0.75;
+    transition: all 1.2s;
     position: relative;
 }
 .template-item:hover{
-    transform: scale(0.96) translate(10px);
-    box-shadow: 0 0 20px #888;
+    transform: scale(1.05) ;
+    box-shadow: 0 0 10px #888;
 }
 .template-item .template-image{
     width: 100%;
@@ -44,8 +44,8 @@
 .template-item .template-btn a{
     text-decoration: none;
 }
-.template-item .editor,.template-item .view{
-    width: 100px;
+.template-item .editor,.template-item .view,.delete-template,.change-template{
+    width: 80px;
     height: 40px;
     border-radius: 30px;
     color: #fff;
@@ -58,11 +58,17 @@
     background-color: red;
     margin-right: 50px;
 }
+.delete-template{
+    background-color: red;
+}
+.change-template{
+    background-color: blue;
+}
 .template-item .view{
     background-color: rgb(240, 206, 18);
 }
-.template-item .editor:hover,.template-item .view:hover{
-    box-shadow: 0 0 10px blue;
+.template-item .editor:hover,.template-item .view:hover,.delete-template:hover,.change-template:hover{
+    box-shadow: 0 0 10px #666;
 }
 .template-item .tip{
     width: 180px;
@@ -93,3 +99,4 @@
     left: 0;   
     z-index: 999; 
 }
+

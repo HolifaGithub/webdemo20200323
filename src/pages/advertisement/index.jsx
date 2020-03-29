@@ -35,9 +35,11 @@ class Advertisement extends Component {
         isView: false,
         isShowToast: false,
         isOther: false,
-        isShow404: false
+        isShow404: false,
+        id:0
     }
-    componentWillMount() {
+    isFromChange=false
+    fetchPageData(){
         const pathName = this.props.location.pathname
         const locationArray = pathName.split('/')
         let id = ''
@@ -59,10 +61,14 @@ class Advertisement extends Component {
             if (this.props.location.query.id) {
                 id = this.props.location.query.id
             }
+            if(this.props.location.query.isFromChange){
+                this.isFromChange=this.props.location.query.isFromChange
+            }
         }
         if (id) {
             axios.get(`http://121.36.102.75:8080/web/${id}`).then(res => {
                 const data = res.data
+                console.log('object',data);
                 if (data.code === 3004) {
                     const cfgList = data.cfgList[0]
                     this.setState({
@@ -72,11 +78,15 @@ class Advertisement extends Component {
                         cfgTitle: cfgList.cfgTitle,
                         cfgBgColor: cfgList.cfgBgColor,
                         isOther: true,
-                        isView: true
+                        isView: true,
+                        id:id
                     })
                 }
             })
         }
+    }
+    componentWillMount() {
+        this.fetchPageData()
     }
     onCfgTitleChange(event) {
         this.setState({ cfgTitle: event.target.value })
@@ -182,9 +192,11 @@ class Advertisement extends Component {
                 this.text = '提交成功！'
                 this.setState({ isShowToast: true }, () => {
                     let timer = setTimeout(() => {
-                        this.setState({ isShowToast: false })
+                        this.setState({ isShowToast: false },()=>{
+                            this.props.history.goBack()
+                        })
                         clearTimeout(timer)
-                    }, 2000)
+                    }, 1000)
                 })
             } else {
                 this.type = 'fail'
@@ -204,6 +216,37 @@ class Advertisement extends Component {
     }
     onCfgFontColorChange(event) {
         this.setState({ cfgFontColor: event.target.value })
+    }
+    onSubmitChangeClick(){
+        let username = this.props.state.username
+        let token = this.props.state.token
+        let { webname, moduleID, cfgBgColor, cfgFontColor, cfgTitle, cfgMain,id } = this.state
+        let data = { webname, moduleID, cfgBgColor, cfgFontColor, cfgTitle, cfgMain,id }
+        axios.post(`http://121.36.102.75:8080/${token}/webcfg/commit/${username}`, data).then(res => {
+            console.log(res);
+            const data = res.data
+            if (data.code === 3001) {
+                this.type = 'success'
+                this.text = '提交修改成功！'
+                this.setState({ isShowToast: true }, () => {
+                    let timer = setTimeout(() => {
+                        this.setState({ isShowToast: false },()=>{
+                            this.props.history.goBack()
+                        })
+                        clearTimeout(timer)
+                    }, 1000)
+                })
+            } else {
+                this.type = 'fail'
+                this.text = '提交修改失败！'
+                this.setState({ isShowToast: true }, () => {
+                    let timer = setTimeout(() => {
+                        this.setState({ isShowToast: false })
+                        clearTimeout(timer)
+                    }, 2000)
+                })
+            }
+        })
     }
     render() {
         return (
@@ -349,7 +392,7 @@ class Advertisement extends Component {
                             </li>
                         </ul>
                     </div>
-                    {!this.state.isOther ? (<div id='advertisement-submit'>
+                    {!this.state.isOther||this.isFromChange ? (<div id='advertisement-submit'>
                         <div className='advertisement-template-name'>
                             <span>模板名：</span>
                             <input type="text" value={this.state.webname} onChange={(event) => {
@@ -359,7 +402,7 @@ class Advertisement extends Component {
                         </div>
                         <div className='advertisement-btn'>
                             <div className='view' onClick={() => { this.onViewClick() }}>{this.state.isView ? '编辑' : '预览'}</div>
-                            <div className='submit' onClick={() => { this.onSubmitClick() }}>提交</div>
+                            {!this.isFromChange?(<div className='submit' onClick={() => { this.onSubmitClick() }}>提交</div>):(<div className='submit' onClick={() => { this.onSubmitChangeClick() }}>提交修改</div>)}
                         </div>
                     </div>) : null}
                 </div >

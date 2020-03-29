@@ -10,7 +10,7 @@ import template3 from './image/template3.png'
 import user from './image/user.png'
 import TemplateItem from './components/template-item/index'
 import axios from 'axios'
-import { login, cancelLogin, setUserName, setToken } from './action'
+import { login, cancelLogin, setUserName, setToken,refetchMyTemplateDatas} from './action'
 import { connect } from 'react-redux'
 import './App.css';
 
@@ -30,6 +30,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     dispatchSetToken(token) {
       return dispatch(setToken(token))
+    },
+    dispatchRefetchMyTemplateDatas(){
+      return dispatch(refetchMyTemplateDatas())
     }
   }
 }
@@ -131,6 +134,11 @@ class App extends Component {
       }
     })
   }
+  componentWillReceiveProps(nextProps){
+    if(nextProps.state.isRefetchMyTemplateDatas){
+      this.onMyTemplatePageClick()
+    }
+  }
   backMainPage() {
     this.setState({ navBarIndex: 0 })
   }
@@ -165,7 +173,6 @@ class App extends Component {
       })
     }
   }
-
   render() {
     // console.log(this.props);
     return (
