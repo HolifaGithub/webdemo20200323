@@ -372,7 +372,7 @@ class Advertisement extends Component {
                                     </div>
                                     {this.state.isView ? (<h2 style={{ color: this.state.cfgFontColor }}>{this.state.cfgMain[3].cfgSub}</h2>) : (<input type='text' value={this.state.cfgMain[3].cfgSub} onChange={(event) => {
                                         event.persist()
-                                        this.onCfgSub3Change(event)
+                                        this.onCfgSub4Change(event)
                                     }} className='on-editor' style={{ color: this.state.cfgFontColor }}></input>)}
                                     <dl>
                                         <dd><img src={bootom4} alt='' /></dd>
